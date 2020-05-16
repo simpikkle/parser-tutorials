@@ -5,23 +5,23 @@ import java.util.stream.Stream;
 
 public class Expression {
 
-    private final Operation operation;
+    private final Operand operand;
 
     private final int left;
 
     private final int right;
 
-    public Expression(Operation operation, int left, int right) {
-        this.operation = operation;
+    public Expression(Operand operand, int left, int right) {
+        this.operand = operand;
         this.left = left;
         this.right = right;
     }
 
     public int execute() {
-        return operation.apply(left, right);
+        return operand.apply(left, right);
     }
 
-    public enum Operation {
+    public enum Operand {
         PLUS("+", (left, right) -> left + right),
         MINUS("-", (left, right) -> left - right),
         MULTIPLY("*", (left, right) -> left * right),
@@ -31,7 +31,7 @@ public class Expression {
 
         private final IntBinaryOperator action;
 
-        Operation(String symbol, IntBinaryOperator action) {
+        Operand(String symbol, IntBinaryOperator action) {
             this.symbol = symbol;
             this.action = action;
         }
@@ -44,7 +44,7 @@ public class Expression {
             return action.applyAsInt(left, right);
         }
 
-        public static Operation tryFindByName(String symbol) {
+        public static Operand tryFindBySymbol(String symbol) {
             return Stream.of(values())
                     .filter(operand -> operand.getSymbol().equals(symbol))
                     .findAny()

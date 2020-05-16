@@ -9,11 +9,11 @@ public class MathListener extends MathGrammarBaseListener {
 
     @Override
     public void enterExpression(MathGrammarParser.ExpressionContext ctx) {
-        Expression.Operation operation = Expression.Operation
-                .tryFindByName(ctx.Operand().getSymbol().getText());
+        Expression.Operand operand = Expression.Operand
+                .tryFindBySymbol(ctx.Operand().getText());
         int left = Integer.parseInt(ctx.number().get(0).getText());
         int right = Integer.parseInt(ctx.number().get(1).getText());
-        expression = new Expression(operation, left, right);
+        expression = new Expression(operand, left, right);
     }
 
     public Expression getExpression() {
